@@ -1,9 +1,11 @@
 <template>
     <div class="columns is-multiline comments">
-        <div class="column is-12 page-title py-2 mb-2">Bu ürün için toplam 17 yorum yapılmıştır. <b>Yorum Yaz</b></div>
+        <div class="column is-12 page-title py-2 mb-2">
+            Bu ürün için toplam {{ productDetails.comments.length }} yorum yapılmıştır. <b>Yorum Yaz</b>
+        </div>
         <div class="column is-12 ">
             <div class="columns is-multiline">
-                <div class="column is-12 comment" v-for="(comment, i) of comments" :key="i">
+                <div class="column is-12 comment" v-for="(comment, i) of productDetails.comments" :key="i">
                     <div class="columns">
                         <div class="column is-3 comment-left my-3">
                             <div class="column is-12">
@@ -12,7 +14,10 @@
                             <div class="column is-12">
                                 {{ comment.date }}
                             </div>
-                            <div class="column is-12 mt-2"><img class="pr-2" src="@/assets/detail/likeIcon.png" />Evet: {{ comment.yes }} <img class="px-2" src="@/assets/detail/dislikeIcon.png" /> Hayir: {{ comment.no }}</div>
+                            <div class="column is-12 mt-2">
+                                <img class="pr-2" src="@/assets/detail/likeIcon.png" />Evet: {{ comment.yes }}
+                                <img class="px-2" src="@/assets/detail/dislikeIcon.png" /> Hayir: {{ comment.no }}
+                            </div>
                             <div class="column is-12 my-2">
                                 Yorumu onayliyor musunuz?
                             </div>
@@ -36,79 +41,27 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "ProductComment",
-    components: {},
-    props: {},
     data() {
         return {
-            comments: [
-                {
-                    yes: 10,
-                    no: 5,
-                    name: "Direnc.net",
-                    date: "2020-11-09",
-                    title: "Urun",
-                    text: "Merhaba , Ürünlerle ilgili bu tip ayrıntılı bilgi almak isterseniz destek@direnc.net adresine mail atabilirsiniz .Teknik ekibimiz sizlere gün içerisinde dönüş sağlayacaktır. İyi Çalışmalar",
-                },
-                {
-                    yes: 2,
-                    no: 0,
-                    name: "Emre Düzgün",
-                    date: "2020-11-09",
-                    title: "Mukemmel",
-                    text: "Ürünü tam set olarak sitede göremedim. ispanyada tam set hali kart 4gb 2 hdmi kablo adaptör kutu fan bakır soğutma 32gbsd kart ayrıca usb den çalışması için sd dönüştürücü tornavida ve başlangıç kitabı. 680tl. sizde bu şekilde bir ürün olmayacak mı full set.",
-                },
-                {
-                    yes: 10,
-                    no: 5,
-                    name: "Direnc.net",
-                    date: "2020-11-09",
-                    title: "Urun",
-                    text: "Merhaba , Ürünlerle ilgili bu tip ayrıntılı bilgi almak isterseniz destek@direnc.net adresine mail atabilirsiniz .Teknik ekibimiz sizlere gün içerisinde dönüş sağlayacaktır. İyi Çalışmalar",
-                },
-                {
-                    yes: 2,
-                    no: 0,
-                    name: "Emre Düzgün",
-                    date: "2020-11-09",
-                    title: "Mukemmel",
-                    text: "Ürünü tam set olarak sitede göremedim. ispanyada tam set hali kart 4gb 2 hdmi kablo adaptör kutu fan bakır soğutma 32gbsd kart ayrıca usb den çalışması için sd dönüştürücü tornavida ve başlangıç kitabı. 680tl. sizde bu şekilde bir ürün olmayacak mı full set.",
-                },
-                {
-                    yes: 10,
-                    no: 5,
-                    name: "Direnc.net",
-                    date: "2020-11-09",
-                    title: "Urun",
-                    text: "Merhaba , Ürünlerle ilgili bu tip ayrıntılı bilgi almak isterseniz destek@direnc.net adresine mail atabilirsiniz .Teknik ekibimiz sizlere gün içerisinde dönüş sağlayacaktır. İyi Çalışmalar",
-                },
-                {
-                    yes: 2,
-                    no: 0,
-                    name: "Emre Düzgün",
-                    date: "2020-11-09",
-                    title: "Mukemmel",
-                    text: "Ürünü tam set olarak sitede göremedim. ispanyada tam set hali kart 4gb 2 hdmi kablo adaptör kutu fan bakır soğutma 32gbsd kart ayrıca usb den çalışması için sd dönüştürücü tornavida ve başlangıç kitabı. 680tl. sizde bu şekilde bir ürün olmayacak mı full set.",
-                },
-            ],
+            productDetails: [],
         };
     },
-    async created() {},
-    methods: {},
-    watch: {},
+    created() {
+        this.$store.dispatch("fillProductDetails");
+        this.productDetails = this.$store.getters.getProductDetails;
+    },
 };
 </script>
 
-<style scoped>
+<style>
 .page-title {
     border-bottom: 1px solid #ececec;
 }
 .comments {
     font-size: 13px;
-    color:black
+    color: black;
 }
 .comment {
     border-bottom: 1px solid #ececec;
@@ -116,7 +69,7 @@ export default {
 .comment-left {
     border-right: 1px solid #ececec;
 }
-.comment-left img{
+.comment-left img {
     vertical-align: middle;
 }
 .yes {

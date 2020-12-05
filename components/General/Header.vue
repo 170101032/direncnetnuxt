@@ -55,7 +55,6 @@ export default {
     components: {
         SignInModal,
     },
-    props: {},
     data() {
         return {
             signinActive: false,

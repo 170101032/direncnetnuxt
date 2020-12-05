@@ -35,8 +35,6 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "SignInModal",
     components: {},
@@ -44,7 +42,7 @@ export default {
     data() {
         return {};
     },
-    async created() {},
+     created() {},
     methods: {},
     watch: {},
 };

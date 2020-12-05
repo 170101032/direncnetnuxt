@@ -13,23 +13,14 @@
 
 export default {
     name: "Carousel",
-    components: {},
-    props: {},
-    data() {
-        return {
-            carousels: [
-                { img: "carousel1.png", link: "" },
-                { img: "carousel2.png", link: "" },
-                { img: "carousel3.png", link: "" },
-                { img: "carousel4.png", link: "" },
-                { img: "carousel5.png", link: "" },
-                { img: "carousel6.png", link: "" },
-            ],
-        };
+    computed:{
+        carousels(){
+            return this.$store.getters.getCarousel
+        }
     },
-    async created() {},
-    methods: {},
-    watch: {},
+    created() {
+        this.$store.dispatch("fillCarousel")
+    },
 };
 </script>
 

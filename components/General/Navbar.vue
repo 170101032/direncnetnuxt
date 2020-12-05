@@ -16,40 +16,30 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "Navbar",
-    components: {},
-    props: {},
-    data() {
-        return {};
-    },
-    async created() {},
-    methods: {},
-    watch: {},
 };
 </script>
 
-<style scoped>
+<style>
 .navbarx {
     background-color: #018cd1;
 }
-.item{
+.navbarx .item{
     color: #fff;
     cursor:pointer;
     text-align: center;
     border-right: 1px solid #fff;
 }
-.item:hover {
+.navbarx .item:hover {
     animation: fadeIn ease 0.3s;
     background-color: #3cbeff;
 }
-.item:last-child:hover{
+.navbarx .item:last-child:hover{
     background-color: #018cd1;
 
 }
-.item:last-child{
+.navbarx .item:last-child{
     border-right: 0;
 }
 </style>

@@ -11,22 +11,12 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "FooterTop",
-    components: {},
-    props: {},
-    data() {
-        return {};
-    },
-    async created() {},
-    methods: {},
-    watch: {},
 };
 </script>
 
-<style scoped>
+<style>
 .footerTop {
     color:#fff;
     background: rgba(10, 162, 238, 0.7);

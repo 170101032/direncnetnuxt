@@ -66,13 +66,13 @@ export default {
     data() {
         return { quantity: 1 };
     },
-    async created() {},
+    created() {},
     methods: {},
     watch: {},
 };
 </script>
 
-<style scoped>
+<style>
 .cart {
     font-size: 13px;
     background-color: #fff;

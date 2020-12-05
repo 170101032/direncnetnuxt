@@ -5,14 +5,18 @@
                 <div class="columns mx-4">
                     <div class="column is-5">
                         <div class="columns">
-                            <div class="column is-2 floatbar-img m-2"><img :src="require('@/assets/detail/rpi1.png')" /></div>
+                            <div class="column is-2 floatbar-img m-2">
+                                <img :src="require('@/assets/detail/' + productDetails.image)" />
+                            </div>
                             <div class="column p-4">
-                                <div class="column is floatbar-title">Raspberry Pi 4 4GB - Model B<br /></div>
-                                <div class="column is floatbar-subtitle">Raspberry Pi</div>
+                                <div class="column is floatbar-title">{{ productDetails.name }}<br /></div>
+                                <div class="column is floatbar-subtitle">{{ productDetails.brand }}</div>
                             </div>
                         </div>
                     </div>
-                    <div class="column is-3 p-4 floatbar-price" align="center">630.39 TL</div>
+                    <div class="column is-3 p-4 floatbar-price" align="center">
+                        {{ (productDetails.price * 1.18).toPrecision(5) }} TL
+                    </div>
                     <div class="column is-4 p-4" align="right">
                         <a class="column is-6 floatbar-add">SEPETE EKLE</a>
                     </div>
@@ -23,18 +27,18 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "FloatBar",
-    components: {},
-    props: {},
     data() {
         return {
             visible: false,
+            productDetails: {},
         };
     },
-    async created() {},
+    created() {
+        this.$store.dispatch("fillProductDetails");
+        this.productDetails = this.$store.getters.getProductDetails;
+    },
     methods: {
         updateScroll() {
             this.visible = window.scrollY;
@@ -43,11 +47,10 @@ export default {
     mounted() {
         window.addEventListener("scroll", this.updateScroll);
     },
-    watch: {},
 };
 </script>
 
-<style scoped>
+<style>
 .floatbar {
     position: fixed;
     bottom: 0;

@@ -1,36 +1,49 @@
 <template>
     <div class="columns is-multiline m-2">
-        <div class="column is-12 breadcrumbs p-1 mb-2">Anasayfa > Raspberry Pi > <span class="breadcrumbs-bold">Raspberry Pi Ana Kartlar</span></div>
+        <div class="column is-12 breadcrumbs p-1 mb-2">
+            Anasayfa > Raspberry Pi > <span class="breadcrumbs-bold">Raspberry Pi Ana Kartlar</span>
+        </div>
         <div class="column is-12">
             <div class="columns detail-border">
                 <div class="column is-6">
                     <b-carousel :pause-info="false" :arrow-hover="false" :indicator-inside="false" iconSize="is-medium">
-                        <b-carousel-item v-for="(item, i) in details" :key="i">
+                        <b-carousel-item v-for="(item, i) in productDetails.images" :key="i">
                             <span class="image">
                                 <b-image :src="require('@/assets/detail/' + item.img)"> </b-image>
                             </span>
                         </b-carousel-item>
                         <template slot="indicators" slot-scope="props">
                             <span class="al image">
-                                <b-image :src="require('@/assets/detail/' + details[props.i].img)"> </b-image>
+                                <b-image :src="require('@/assets/detail/' + productDetails.images[props.i].img)"> </b-image>
                             </span>
                         </template>
                     </b-carousel>
                 </div>
                 <div class="column is-6">
                     <div class="columns is-multiline detail-right">
-                        <div class="column is-12 product-name p-4 pb-6">Raspberry Pi 4 4GB - Model B</div>
-                        <div class="column is-12 product-bold left-border p-3 px-4">
-                            Marka/Menşei: <a><span class="blu">Raspberry Pi</span></a>
+                        <div class="column is-12 product-name p-4 pb-6">
+                            {{ productDetails.name }}
                         </div>
-                        <div class="column is-12 product-bold left-border p-3 px-4">Stok Kodu : 14655</div>
-                        <div class="column is-12 left-border p-3 px-4">513,83 TL +KDV</div>
-                        <div class="column is-12 product-price left-border p-3 px-4"><span class="blu">606,31 TL</span> KDV Dahil</div>
+                        <div class="column is-12 product-bold left-border p-3 px-4">
+                            Marka/Menşei:
+                            <a
+                                ><span class="blu">{{ productDetails.brand }}</span></a
+                            >
+                        </div>
+                        <div class="column is-12 product-bold left-border p-3 px-4">Stok Kodu : {{ productDetails.code }}</div>
+                        <div class="column is-12 left-border p-3 px-4">{{ productDetails.price }} TL +KDV</div>
+                        <div class="column is-12 product-price left-border p-3 px-4">
+                            <span class="blu">{{ (productDetails.price * 1.18).toPrecision(5) }} TL</span> KDV Dahil
+                        </div>
                         <div class="column is-12 left-border px-4 py-1">
                             <div class="columns is-multiline">
                                 <div class="column is-6">
                                     <div class="columns p-4">
-                                        <a class="column is-3 quantity-button" @click="quantity > 0 ? quantity-- : (quantity = 0)"><p>-</p></a>
+                                        <a
+                                            class="column is-3 quantity-button"
+                                            @click="quantity > 1 ? quantity-- : (quantity = 1)"
+                                            ><p>-</p></a
+                                        >
                                         <input class="column quantity-input is-6" type="text" v-model="quantity" disabled />
                                         <a class="column is-3 quantity-button" @click="quantity++"><p>+</p></a>
                                     </div>
@@ -39,7 +52,9 @@
                                     <a class="add-cart-button">Sepete Ekle</a>
                                 </div>
                                 <div class="column is-12">
-                                    <a class="column is-12 add-list-button"> <img src="@/assets/detail/favicon.png" />Alisveris Listeme Ekle </a>
+                                    <a class="column is-12 add-list-button">
+                                        <img src="@/assets/detail/favicon.png" />Alisveris Listeme Ekle
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -52,29 +67,22 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "ProductDetail",
-    components: {},
-    props: {},
     data() {
         return {
-            quantity: 0,
-            details: [
-                { img: "rpi1.png", link: "" },
-                { img: "rpi2.png", link: "" },
-                { img: "rpi3.png", link: "" },
-            ],
+            quantity: 1,
+            productDetails: {},
         };
     },
-    async created() {},
-    methods: {},
-    watch: {},
+    created() {
+        this.$store.dispatch("fillProductDetails");
+        this.productDetails = this.$store.getters.getProductDetails;
+    },
 };
 </script>
 
-<style scoped>
+<style>
 .breadcrumbs {
     color: #018cd1;
     font-size: 17px;

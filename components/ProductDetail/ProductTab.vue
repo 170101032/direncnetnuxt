@@ -3,10 +3,10 @@
         <div class="column is-12">
             <b-tabs>
                 <b-tab-item label="Urun Ozellikleri">
-                    Raspberry Pi 4 28nm tabanlı 1.5G Dört Çekirdekli CPU ve 4Gb DRR4 RAM içeren küçük bir DIY bilgisayardır. PC benzeri yetenekler elde etmek için Raspberry Pi 4, 4K Mikro HDMI, USB 3.0, BLE Bluetooth 5.0, çift-bantlı 2.4/5.0 GHz Wireless LAN, USB-C güç girişi ve PoE ile uyumlu True Gigabit Ethernet'e sahiptir.
+                    {{ productDetails.descr }}
                 </b-tab-item>
                 <b-tab-item label="Odeme Secenekleri"></b-tab-item>
-                <b-tab-item label="Yorumlar(17)"><ProductComment /></b-tab-item>
+                <b-tab-item :label="'Yorumlar(' + productDetails.comments.length + ')'"><ProductComment /></b-tab-item>
                 <b-tab-item label="Resimler"></b-tab-item>
             </b-tabs>
         </div>
@@ -15,7 +15,6 @@
 
 <script>
 import ProductComment from "@/components/ProductDetail/ProductComment.vue";
-//import store from "@/store";
 
 export default {
     name: "ProductTab",
@@ -24,11 +23,14 @@ export default {
     },
     props: {},
     data() {
-        return {};
+        return {
+            productDetails: {},
+        };
     },
-    async created() {},
-    methods: {},
-    watch: {},
+    created() {
+        this.$store.dispatch("fillProductDetails");
+        this.productDetails = this.$store.getters.getProductDetails;
+    },
 };
 </script>
 
