@@ -1,73 +1,50 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        direncnetnuxt
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+    <section class="columns is-multiline">
+        <div class="column is-12">
+            <Header />
+        </div>
+        <div class="column is-12">
+            <Navbar />
+        </div>
+        <div class="column is-12">
+            <Carousel />
+        </div>
+        <div class="column is-12">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-3">
+                        <Sidebar />
+                    </div>
+                    <div class="column is-9">
+                        <ShowcaseMain />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <FooterTop class="column is-12" />
+        <Footer class="column is-12" />
+    </section>
 </template>
 
 <script>
-export default {}
+import Header from "@/components/General/Header.vue";
+import Navbar from "@/components/General/Navbar.vue";
+import Carousel from "@/components/Homepage/Carousel.vue";
+import Sidebar from "@/components/General/Sidebar.vue";
+import ShowcaseMain from "@/components/Homepage/ShowcaseMain.vue";
+import FooterTop from "@/components/General/FooterTop.vue";
+import Footer from "@/components/General/Footer.vue";
+
+export default {
+    name: "Homepage",
+    components: {
+        Header,
+        Navbar,
+        Carousel,
+        Sidebar,
+        ShowcaseMain,
+        FooterTop,
+        Footer,
+    },
+};
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
