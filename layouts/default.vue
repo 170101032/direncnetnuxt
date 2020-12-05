@@ -11,7 +11,7 @@ body {
   font-family: "Roboto Condensed", sans-serif;
 }
 .container {
-  max-width: 1200px;
+  max-width: 1200px !important;
 }
 
 .columns {

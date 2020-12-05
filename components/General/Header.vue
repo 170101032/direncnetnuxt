@@ -1,17 +1,15 @@
 <template>
     <div class="columns is-multiline">
-        <div class="column is-12 header-top">
+        <div class="column is-12 header-top pb-3">
             <div class="container">
-                <div class="container">
-                    <div class="columns">
-                        <div class="column p-1" align="right">
-                            <a class="pl-4"><img class="pr-2" src="@/assets/header/fb.png" />Facebook Ile Baglan</a>
-                            <a class="pl-4" @click="signinActive = true"
-                                ><img class="pr-2" src="@/assets/header/log_in.png" />Uye Girisi</a
-                            >
-                            <a class="pl-4"><img class="pr-2" src="@/assets/header/register.png" />Yeni Uyelik</a>
-                            <a class="pl-4"><img class="pr-2" src="@/assets/header/tr.png" />TR</a>
-                        </div>
+                <div class="columns">
+                    <div class="column p-1" align="right">
+                        <a class="pl-4"><img class="pr-2" src="@/assets/header/fb.png" />Facebook Ile Baglan</a>
+                        <a class="pl-4" @click="signinActive = true"
+                            ><img class="pr-2" src="@/assets/header/log_in.png" />Uye Girisi</a
+                        >
+                        <a class="pl-4"><img class="pr-2" src="@/assets/header/register.png" />Yeni Uyelik</a>
+                        <a class="pl-4"><img class="pr-2" src="@/assets/header/tr.png" />TR</a>
                     </div>
                 </div>
             </div>
@@ -34,8 +32,22 @@
                         <NuxtLink class="cart" to="/CartPage">
                             <b-field position="is-right">
                                 <button><img src="@/assets/header/basket.png" /></button>
-                                <input class="cart-text" placeholder="0 Urun/0,00 TL" disabled />
-                                <div class="tooltip columns is-multiline">
+                                <input
+                                    class="cart-text"
+                                    :placeholder="
+                                        cart.reduce((acc, e) => acc + e.quantity, 0) +
+                                            ' Urun/' +
+                                            cart.reduce((acc, e) => acc + e.price * e.quantity, 0).toPrecision(4) +
+                                            'TL'
+                                    "
+                                    disabled
+                                />
+                                <div v-if="!cart.lentgh" class="tooltip columns is-multiline">
+                                    <p align="center" style="font-size:12px;color:red;padding:10px;">
+                                        Sepetinizde urun bulunmamaktadir.
+                                    </p>
+                                </div>
+                                <div v-if="cart.length" class="tooltip columns is-multiline">
                                     <div class="column is-12 m-2" v-for="(item, i) in cart" :key="i">
                                         <div class="columns border-bot">
                                             <div class="column is-4">
@@ -54,7 +66,7 @@
                                         {{ cart.reduce((acc, e) => acc + e.price * e.quantity, 0).toPrecision(5) }} TL
                                     </div>
                                     <div>
-                                        <button class="gotocart" align="center">Sepete Git</button>
+                                        <button class="gotocart ml-6">Sepete Git</button>
                                     </div>
                                 </div>
                             </b-field>
@@ -64,7 +76,6 @@
             </div>
         </div>
         <b-modal v-model="signinActive" has-modal-card trap-focus :destroy-on-hide="false" aria-role="dialog" aria-modal>
-            <a class="close"><img src="@/assets/signin/popupClose.png"/></a>
             <SignInModal />
         </b-modal>
     </div>
@@ -78,14 +89,15 @@ export default {
     components: {
         SignInModal,
     },
+    computed: {
+        cart() {
+            return this.$store.getters.getCart;
+        },
+    },
     data() {
         return {
             signinActive: false,
-            cart: [],
         };
-    },
-    created() {
-        this.cart = this.$store.getters.getCart;
     },
 };
 </script>
@@ -176,5 +188,20 @@ export default {
 }
 .border-bot {
     border-bottom: 1px solid #eee;
+}
+.gotocart {
+    color: #fff !important;
+    background-color: #012990 !important;
+    border-radius: 3px;
+    font-size: 14px;
+    border: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.gotocart:hover {
+    color: #fff !important;
+    background-color: #3cbeff;
 }
 </style>

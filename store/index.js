@@ -32,12 +32,14 @@ export const mutations = {
   setCart: (state, payload) => (state.cart = payload),
   addCart: (state, payload) => {
     if (state.cart.some(e => e.name == payload.name)) {
-      return state.cart.find(e => e.name == payload.name).quantity++;
+      return (state.cart.find(e => e.name == payload.name).quantity +=
+        payload.quantity);
     }
     state.cart.push(payload);
   },
   removeCart: (state, payload) => {
-      state.cart = state.cart.filter(e => e.name != payload.name);
+    console.log(state.cart);
+    state.cart = state.cart.filter(e => e.name != payload.name);
   }
 };
 

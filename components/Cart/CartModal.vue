@@ -1,5 +1,6 @@
 <template>
     <div class="columns is-multiline cartmodal p-4">
+        <a @click="$parent.close()" class="closex"><img src="@/assets/signin/popupClose.png"/></a>
         <div class="column is-12 cartmodal-title">
             Urun Sepetinize Eklendi
         </div>
@@ -44,8 +45,8 @@
         </div>
 
         <div class="column is-12 border-top mt-3 p-2 pt-3">
-            <a class="cartmodal-button p-2" href="/">Alisverise Devam</a>
-            <a class="cartmodal-button p-2 is-pulled-right" href="/CartPage">Sepete Git</a>
+            <a class="cartmodal-button p-2" @click="$parent.close()">Alisverise Devam</a>
+            <NuxtLink class="cartmodal-button p-2 is-pulled-right" to="/CartPage">Sepete Git</NuxtLink>
         </div>
     </div>
 </template>
@@ -65,6 +66,11 @@ export default {
     methods: {
         removeCart(item) {
             this.$store.dispatch("removeCart", { name: item.name });
+        },
+    },
+      watch: {
+        "$store.getters.getCart": function() {
+            this.cart = this.$store.getters.getCart;
         },
     },
 };
@@ -109,5 +115,14 @@ export default {
 }
 .table-box {
     border: 1px solid #ececec;
+}
+.closex {
+    position: absolute;
+    margin-top:-30px;
+    margin-left:930px;
+    width: 30px;
+    height: 30px;
+    z-index: 333;
+    cursor: pointer;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="visible" class="columns is-multiline floatbar">
+    <div v-if="visible" class="columns is-multiline floatbar m-0 p-0">
         <div class="column is-12">
             <div class="container">
                 <div class="columns mx-4">

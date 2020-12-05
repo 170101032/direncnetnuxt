@@ -1,5 +1,6 @@
 <template>
     <div class="columns is-multiline signin p-4">
+        <a @click="$parent.close()" class="close"><img src="@/assets/signin/popupClose.png"/></a>
         <div class="column is-12 signin-title p-3 pl-5">Uye giris bilgilerinizi giriniz.</div>
         <div class="column is-12 p-3">
             <b-field class="column is-12 email">
@@ -37,14 +38,6 @@
 <script>
 export default {
     name: "SignInModal",
-    components: {},
-    props: {},
-    data() {
-        return {};
-    },
-     created() {},
-    methods: {},
-    watch: {},
 };
 </script>
 
@@ -63,9 +56,9 @@ export default {
     font-weight: 400;
 }
 .close {
-    position: absolute;
-    top: 25%;
-    right: 36%;
+    position:absolute;
+    margin-top:-30px;
+    margin-left:470px;
     width: 30px;
     height: 30px;
     z-index: 333;
@@ -129,12 +122,11 @@ export default {
     line-height: 50px;
     border: 1px solid #e6e6e6;
 }
-.sign-links{
-    font-size:15px;
+.sign-links {
+    font-size: 15px;
     color: black;
 }
-.sign-links:hover{
+.sign-links:hover {
     color: black;
 }
-
 </style>

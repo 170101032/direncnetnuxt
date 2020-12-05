@@ -11,21 +11,25 @@
                         <th class="column is-2 table-head table-bold p-2">Toplam Tutar</th>
                         <th class="column is-1 table-head table-bold p-2">Sil</th>
                     </tr>
-                    <tr class="columns">
-                        <td class="column is-1 p-2"><img class="cart-img" src="@/assets/detail/rpi1.png" /></td>
-                        <td class="column is-4 table-bold p-2"><span>Raspberry Pi 4 4GB - Model B</span></td>
+                    <tr class="columns" v-for="(item, i) in cart" :key="i">
+                        <td class="column is-1 p-2">
+                            <img class="cart-img" :src="require('@/assets/products/' + item.img)" />
+                        </td>
+                        <td class="column is-4 table-bold p-2">
+                            <span>{{ item.name }}</span>
+                        </td>
                         <td class="column is-2 p-2">
                             <div class="column is-12 table-box p-4">
                                 ADET:
-                                <a @click="quantity > 1 ? quantity-- : 1" class="table-box p-2 px-3 ml-4 mr-1">-</a>
-                                {{ quantity }}
-                                <a @click="quantity++" class="table-box p-2 px-3 mx-1">+</a>
+                                <a @click="item.quantity > 1 ? item.quantity-- : 1" class="table-box p-2 px-3 ml-4 mr-1">-</a>
+                                {{ item.quantity }}
+                                <a @click="item.quantity++" class="table-box p-2 px-3 mx-1">+</a>
                             </div>
                         </td>
-                        <td class="column is-2 table-bold p-2">502,99 TL + %18 KDV</td>
-                        <td class="column is-2 p-2">593,53 TL</td>
+                        <td class="column is-2 table-bold p-2">{{ item.price.toPrecision(5) }} TL + %18 KDV</td>
+                        <td class="column is-2 p-2">{{ (item.price * item.quantity).toPrecision(5) }} TL</td>
                         <td class="column is-1 p-2">
-                            <a class="cart-cross p-1"><img src="@/assets/cart/cross.png"/></a>
+                            <a @click="removeCart(item)" class="cart-cross p-1"><img src="@/assets/cart/cross.png"/></a>
                         </td>
                     </tr>
                 </table>
@@ -35,7 +39,7 @@
                     <div class="column is-8">
                         <a class="cart-link p-1 mr-1">Sepeti Guncelle</a>
                         <a class="cart-link p-1 mr-1">Sepeti Temizle</a>
-                        <a class="cart-link p-1 mr-1">Alisverise Devam</a>
+                        <NuxtLink to="/" class="cart-link p-1 mr-1">Alisverise Devam</NuxtLink>
                         <a class="cart-link p-1 mr-1">Alisveris Listeme Ekle</a>
                     </div>
                 </div>
@@ -43,11 +47,15 @@
                     <table class="column is-12">
                         <tr class="columns">
                             <td class="column is-6 table-box p-1">Sepet Toplamı</td>
-                            <td class="column is-6 table-box p-1">593,53 TL</td>
+                            <td class="column is-6 table-box p-1">
+                                {{ cart.reduce((acc, e) => acc + e.price * e.quantity, 0).toPrecision(5) }}TL
+                            </td>
                         </tr>
                         <tr class="columns">
                             <td class="column is-6 table-box p-1">Genel Toplam</td>
-                            <td class="column is-6 table-box p-1">593,53 TL</td>
+                            <td class="column is-6 table-box p-1">
+                                {{ cart.reduce((acc, e) => acc + e.price * e.quantity, 0).toPrecision(5) }}TL
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -57,18 +65,24 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "Cart",
-    components: {},
-    props: {},
     data() {
-        return { quantity: 1 };
+        return { cart: [] };
     },
-    created() {},
-    methods: {},
-    watch: {},
+    created() {
+        this.cart = this.$store.getters.getCart;
+    },
+    methods: {
+        removeCart(item) {
+            this.$store.dispatch("removeCart", { name: item.name });
+        },
+    },
+    watch: {
+        "$store.getters.getCart": function() {
+            this.cart = this.$store.getters.getCart;
+        },
+    },
 };
 </script>
 
@@ -80,13 +94,13 @@ export default {
 .cart-title {
     font-size: 20px;
 }
-.cart-link{
-    color:#fff;
+.cart-link {
+    color: #fff;
     background-color: #012990;
 }
-.cart-link:hover{
+.cart-link:hover {
     color: #fff;
-    background-color: #3CBEFF;
+    background-color: #3cbeff;
 }
 .cart-img {
     width: 90px;

@@ -9,8 +9,6 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "Carousel",
     computed:{

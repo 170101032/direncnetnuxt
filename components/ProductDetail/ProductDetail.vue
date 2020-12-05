@@ -81,6 +81,7 @@ export default {
     },
     methods: {
         addCart(item) {
+            console.log(this.quantity)
             this.$store.dispatch("addCart", {
                 name: item.name,
                 quantity: this.quantity,

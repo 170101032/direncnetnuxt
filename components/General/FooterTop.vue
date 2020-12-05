@@ -1,5 +1,5 @@
 <template>
-    <div class="footerTop p-4">
+    <div class="footerTop p-4 mt-6">
         <div class="container">
             <div class="columns">
                 <div class="column">Guvenli Alisveris</div>

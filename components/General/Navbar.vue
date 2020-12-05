@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-multiline m-3">
+    <div class="columns is-multiline m-3 p-3">
         <div class="column is-12">
             <div class="container">
                 <div class="columns navbarx">
