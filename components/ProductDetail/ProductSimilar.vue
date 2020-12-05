@@ -21,7 +21,7 @@
                             <div class="column is-12">
                                 <div class="column is-12 cardbox">{{ item.title }}</div>
                                 <div class="column is-12 cardprice">{{ item.price }} TL <span class="kdv"> + KDV</span></div>
-                                <div class="column is-12 cardadd">
+                                <div @click="addCart(item)" class="column is-12 cardadd">
                                     <img src="@/assets/sidebar/plus_passive.png" />Sepete Ekle
                                 </div>
                             </div>
@@ -45,6 +45,17 @@ export default {
     created() {
         this.$store.dispatch("fillProductDetails");
         this.productDetails = this.$store.getters.getProductDetails;
+    },
+    methods: {
+        addCart(item) {
+            this.$store.dispatch("addCart", {
+                name: item.title,
+                quantity: 1,
+                price: parseFloat(item.price),
+                img: item.img,
+                link: item.link,
+            });
+        },
     },
 };
 </script>

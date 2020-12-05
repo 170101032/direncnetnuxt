@@ -6,7 +6,9 @@
                     <div class="columns">
                         <div class="column p-1" align="right">
                             <a class="pl-4"><img class="pr-2" src="@/assets/header/fb.png" />Facebook Ile Baglan</a>
-                            <a class="pl-4" @click="signinActive = true"><img class="pr-2" src="@/assets/header/log_in.png" />Uye Girisi</a>
+                            <a class="pl-4" @click="signinActive = true"
+                                ><img class="pr-2" src="@/assets/header/log_in.png" />Uye Girisi</a
+                            >
                             <a class="pl-4"><img class="pr-2" src="@/assets/header/register.png" />Yeni Uyelik</a>
                             <a class="pl-4"><img class="pr-2" src="@/assets/header/tr.png" />TR</a>
                         </div>
@@ -33,6 +35,28 @@
                             <b-field position="is-right">
                                 <button><img src="@/assets/header/basket.png" /></button>
                                 <input class="cart-text" placeholder="0 Urun/0,00 TL" disabled />
+                                <div class="tooltip columns is-multiline">
+                                    <div class="column is-12 m-2" v-for="(item, i) in cart" :key="i">
+                                        <div class="columns border-bot">
+                                            <div class="column is-4">
+                                                <img :src="require('@/assets/products/' + item.img)" />
+                                            </div>
+                                            <div class="column is-8 p-2" align="left">
+                                                {{ item.name }}
+                                                <br />
+                                                <br />
+                                                {{ item.quantity }} Adet/{{ item.price }} + KDV
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-12 m-2 p-2" align="left">
+                                        Genel Toplam :
+                                        {{ cart.reduce((acc, e) => acc + e.price * e.quantity, 0).toPrecision(5) }} TL
+                                    </div>
+                                    <div>
+                                        <button class="gotocart" align="center">Sepete Git</button>
+                                    </div>
+                                </div>
                             </b-field>
                         </NuxtLink>
                     </div>
@@ -48,7 +72,6 @@
 
 <script>
 import SignInModal from "@/components/General/SignInModal.vue";
-//import store from "@/store";
 
 export default {
     name: "Header",
@@ -58,11 +81,12 @@ export default {
     data() {
         return {
             signinActive: false,
+            cart: [],
         };
     },
-    async created() {},
-    methods: {},
-    watch: {},
+    created() {
+        this.cart = this.$store.getters.getCart;
+    },
 };
 </script>
 
@@ -126,5 +150,31 @@ export default {
 }
 .cart input::placeholder {
     color: #fff;
+}
+
+.tooltip {
+    visibility: hidden;
+    color: black;
+    font-weight: bolder;
+    font-size: 10px;
+    line-height: 10px;
+    padding: 5px 5px 5px 5px;
+    background: white;
+    position: absolute;
+    z-index: 1000;
+    top: 73%;
+    left: 85%;
+    animation: fadeIn ease 0.3s;
+}
+.cart:hover .tooltip {
+    visibility: visible;
+    animation: fadeIn ease 0.3s;
+}
+.cart:hover .tooltip:hover {
+    visibility: visible;
+    animation: fadeIn ease 0.3s;
+}
+.border-bot {
+    border-bottom: 1px solid #eee;
 }
 </style>

@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="column is-6 p-4">
-                                    <a class="add-cart-button">Sepete Ekle</a>
+                                    <a @click="addCart(productDetails)" class="add-cart-button">Sepete Ekle</a>
                                 </div>
                                 <div class="column is-12">
                                     <a class="column is-12 add-list-button">
@@ -78,6 +78,17 @@ export default {
     created() {
         this.$store.dispatch("fillProductDetails");
         this.productDetails = this.$store.getters.getProductDetails;
+    },
+    methods: {
+        addCart(item) {
+            this.$store.dispatch("addCart", {
+                name: item.name,
+                quantity: this.quantity,
+                price: parseFloat(item.price),
+                img: "raspbery.jpg",
+                link: "/productdetails",
+            });
+        },
     },
 };
 </script>

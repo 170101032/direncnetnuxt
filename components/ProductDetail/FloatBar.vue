@@ -17,7 +17,7 @@
                     <div class="column is-3 p-4 floatbar-price" align="center">
                         {{ (productDetails.price * 1.18).toPrecision(5) }} TL
                     </div>
-                    <div class="column is-4 p-4" align="right">
+                    <div @click="addCart(productDetails)" class="column is-4 p-4" align="right">
                         <a class="column is-6 floatbar-add">SEPETE EKLE</a>
                     </div>
                 </div>
@@ -42,6 +42,15 @@ export default {
     methods: {
         updateScroll() {
             this.visible = window.scrollY;
+        },
+        addCart(item) {
+            this.$store.dispatch("addCart", {
+                name: item.name,
+                quantity: 1,
+                price: parseFloat(item.price),
+                img: "raspbery.jpg",
+                link: "/productdetails",
+            });
         },
     },
     mounted() {

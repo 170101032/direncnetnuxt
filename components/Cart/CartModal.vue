@@ -13,27 +13,34 @@
                     <th class="column is-2 table-box table-head p-2">Toplam Tutar</th>
                     <th class="column is-1 table-box table-head p-2">Sil</th>
                 </tr>
-                <tr class="columns">
-                    <td class="column is-1 table-box p-2"><img class="cartmodal-img" src="@/assets/detail/rpi1.png" /></td>
-                    <td class="column is-4 table-box table-head p-2"><span>Raspberry Pi 4 4GB - Model B</span></td>
+                <tr class="columns" v-for="(item, i) in cart" :key="i">
+                    <td class="column is-1 table-box p-2">
+                        <img class="cartmodal-img" :src="require('@/assets/products/' + item.img)" />
+                    </td>
+                    <td class="column is-4 table-box table-head p-2">
+                        <span>{{ item.name }}</span>
+                    </td>
                     <td class="column is-2 table-box p-2">
                         <div class="column is-12 table-box p-2 pb-4">
                             ADET:<br /><br />
-                            <a @click="quantity > 1 ? quantity-- : 1" class="table-box p-2 px-3 mx-1">-</a>
-                            {{ quantity }}
-                            <a @click="quantity++" class="table-box p-2 px-3 mx-1">+</a>
+                            <a @click="item.quantity > 1 ? item.quantity-- : 1" class="table-box p-2 px-3 mx-1">-</a>
+                            {{ item.quantity }}
+                            <a @click="item.quantity++" class="table-box p-2 px-3 mx-1">+</a>
                         </div>
                     </td>
-                    <td class="column is-2 table-box p-2">502,99 TL + %18 KDV</td>
-                    <td class="column is-2 table-box p-2">593,53 TL</td>
+                    <td class="column is-2 table-box p-2">{{ item.price.toPrecision(5) }} TL + %18 KDV</td>
+                    <td class="column is-2 table-box p-2">{{ (item.price * item.quantity).toPrecision(5) }} TL</td>
                     <td class="column is-1 table-box p-2">
-                        <a class="cartmodal-cross p-1"><img src="@/assets/cart/cross.png"/></a>
+                        <a @click="removeCart(item)" class="cartmodal-cross p-1"><img src="@/assets/cart/cross.png"/></a>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="column is-12" align="right">
-            <div class="column is-4 table-box p-1" align="right"><b class="is-pulled-left px-2 table-head">Sepet Toplamı:</b> {{ 593.53 * quantity }} TL</div>
+            <div class="column is-4 table-box p-1" align="right">
+                <b class="is-pulled-left px-2 table-head">Sepet Toplamı:</b>
+                {{ cart.reduce((acc, e) => acc + e.price * e.quantity, 0).toPrecision(5) }} TL
+            </div>
         </div>
 
         <div class="column is-12 border-top mt-3 p-2 pt-3">
@@ -44,18 +51,22 @@
 </template>
 
 <script>
-//import store from "@/store";
-
 export default {
     name: "CartModal",
-    components: {},
     props: {},
     data() {
-        return { quantity: 1 };
+        return {
+            cart: [],
+        };
     },
-    async created() {},
-    methods: {},
-    watch: {},
+    created() {
+        this.cart = this.$store.getters.getCart;
+    },
+    methods: {
+        removeCart(item) {
+            this.$store.dispatch("removeCart", { name: item.name });
+        },
+    },
 };
 </script>
 

@@ -21,7 +21,7 @@ export const getters = {
   getSidebar: state => state.sidebar,
   getProducts: state => state.products,
   getProductDetails: state => state.productDetails,
-  getCart: state => state.cart,
+  getCart: state => state.cart
 };
 
 export const mutations = {
@@ -30,6 +30,15 @@ export const mutations = {
   setProducts: (state, payload) => (state.products = payload),
   setProductDetails: (state, payload) => (state.productDetails = payload),
   setCart: (state, payload) => (state.cart = payload),
+  addCart: (state, payload) => {
+    if (state.cart.some(e => e.name == payload.name)) {
+      return state.cart.find(e => e.name == payload.name).quantity++;
+    }
+    state.cart.push(payload);
+  },
+  removeCart: (state, payload) => {
+      state.cart = state.cart.filter(e => e.name != payload.name);
+  }
 };
 
 export const actions = {
@@ -44,13 +53,11 @@ export const actions = {
   },
   fillProductDetails(state) {
     state.commit("setProductDetails", api.selectProductDetails());
+  },
+  addCart(state, payload) {
+    state.commit("addCart", payload);
+  },
+  removeCart(state, payload) {
+    state.commit("removeCart", payload);
   }
 };
-
-/*
-
-
-this.watch(
-        () => state.getters.getMaterialSelected,
-        () => state.dispatch("selectMaterial")
-      );*/

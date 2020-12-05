@@ -6,20 +6,18 @@
             </div>
         </div>
         <div class="column is-3" v-for="(item, i) of items" :key="i">
-            <a href="/ProductPage">
-                <div class="columns is-multiline carditem">
-                    <div class="column is-12">
-                        <img :src="require('@/assets/products/' + item.img)" />
-                    </div>
-                    <div class="column is-12">
-                        <div class="column is-12 cardbox">{{ item.title }}</div>
-                        <div class="column is-12 cardprice">{{ item.price }} TL <span class="kdv"> + KDV</span></div>
-                        <div @click="cartmodalActive = true" class="column is-12 cardadd">
-                            <img src="@/assets/sidebar/plus_passive.png" />Sepete Ekle
-                        </div>
-                    </div>
+            <div class="columns is-multiline carditem">
+                <div class="column is-12">
+                    <img :src="require('@/assets/products/' + item.img)" />
                 </div>
-            </a>
+                <div class="column is-12">
+                    <div class="column is-12 cardbox">{{ item.title }}</div>
+                    <div class="column is-12 cardprice">{{ item.price }} TL <span class="kdv"> + KDV</span></div>
+                    <a @click="addCart(item)" class="column is-12 cardadd">
+                        <img src="@/assets/sidebar/plus_passive.png" />Sepete Ekle
+                    </a>
+                </div>
+            </div>
         </div>
         <b-modal v-model="cartmodalActive" has-modal-card trap-focus :destroy-on-hide="false" aria-role="dialog" aria-modal>
             <CartModal />
@@ -44,6 +42,12 @@ export default {
     created() {
         this.$store.dispatch("fillProducts");
         this.items = this.$store.getters.getProducts;
+    },
+    methods: {
+        addCart(item) {
+            this.cartmodalActive = true;
+            this.$store.dispatch("addCart", { name: item.title, quantity: 1, price: parseFloat(item.price), img:item.img, link: item.link });
+        },
     },
 };
 </script>
