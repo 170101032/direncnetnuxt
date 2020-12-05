@@ -29,12 +29,12 @@
                         </b-field>
                     </div>
                     <div class="column" align="right">
-                        <a class="cart" href="/cart">
+                        <NuxtLink class="cart" to="/CartPage">
                             <b-field position="is-right">
                                 <button><img src="@/assets/header/basket.png" /></button>
                                 <input class="cart-text" placeholder="0 Urun/0,00 TL" disabled />
                             </b-field>
-                        </a>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>

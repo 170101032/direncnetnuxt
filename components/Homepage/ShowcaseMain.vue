@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="column is-3" v-for="(item, i) of items" :key="i">
-            <a  @click="cartmodalActive = true" >
+            <a href="/ProductPage">
                 <div class="columns is-multiline carditem">
                     <div class="column is-12">
                         <img :src="require('@/assets/products/' + item.img)" />
@@ -289,7 +289,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .showcase-title {
     color: #0aa2ee;
     font-size: 18px;

@@ -38,7 +38,7 @@
 
         <div class="column is-12 border-top mt-3 p-2 pt-3">
             <a class="cartmodal-button p-2" href="/">Alisverise Devam</a>
-            <a class="cartmodal-button p-2 is-pulled-right" href="/cart">Sepete Git</a>
+            <a class="cartmodal-button p-2 is-pulled-right" href="/CartPage">Sepete Git</a>
         </div>
     </div>
 </template>
@@ -59,7 +59,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .cartmodal {
     font-size: 13px;
     background-color: #fff;
